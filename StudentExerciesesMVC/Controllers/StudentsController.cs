@@ -93,7 +93,7 @@ namespace StudentExerciesesMVC.Controllers
 
                 }
             }
-                return View(student);
+            return View(student);
         }
 
         // GET: Students/Create
