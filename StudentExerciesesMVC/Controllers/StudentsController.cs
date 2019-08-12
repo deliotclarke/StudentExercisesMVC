@@ -64,7 +64,36 @@ namespace StudentExerciesesMVC.Controllers
         // GET: Students/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Student student = null;
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT Id, FirstName, LastName, SlackHandle, CohortId
+                    FROM Student
+                    WHERE Id = @id
+                    ";
+
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if(reader.Read())
+                    {
+                        student = new Student()
+                        {
+                            StudentId = reader.GetInt32(reader.GetOrdinal("Id")),
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                            SlackHandle = reader.GetString(reader.GetOrdinal("SlackHandle")),
+                            CohortId = reader.GetInt32(reader.GetOrdinal("CohortId"))
+                        };
+                    }
+
+                }
+            }
+                return View(student);
         }
 
         // GET: Students/Create
