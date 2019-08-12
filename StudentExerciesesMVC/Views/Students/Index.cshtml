@@ -16,19 +16,13 @@
                 @Html.DisplayNameFor(model => model.StudentId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SlackHandle)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CohortId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th></th>
         </tr>
@@ -40,19 +34,13 @@
                 @Html.DisplayFor(modelItem => item.StudentId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SlackHandle)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CohortId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
