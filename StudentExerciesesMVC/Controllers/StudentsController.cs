@@ -100,7 +100,7 @@ namespace StudentExerciesesMVC.Controllers
         // GET: Students/Create
         public ActionResult Create()
         {
-            var viewModel = new StudentCreateViewModel(_config.GetConnectionString("DefaultConnection"));
+            var viewModel = new StudentCreateViewModel();
             return View(viewModel);
         }
 
