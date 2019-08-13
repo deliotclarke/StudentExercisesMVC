@@ -1,18 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using StudentExerciesesMVC.Models;
 
 namespace StudentExerciesesMVC.Controllers
 {
     public class CohortsController : Controller
     {
+        private readonly IConfiguration _config;
+
+        public CohortsController(IConfiguration config)
+        {
+            _config = config;
+        }
+
+        public SqlConnection Connection
+        {
+            get
+            {
+                return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            }
+        }
+
         // GET: Cohorts
         public ActionResult Index()
         {
-            return View();
+            var cohorts = new List<Cohort>();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT Id, [Name] FROM Cohort
+                    ";
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while(reader.Read())
+                    {
+                        cohorts.Add(new Cohort()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                        });
+                    }
+
+                    reader.Close();
+                }
+            }
+            return View(cohorts);
         }
 
         // GET: Cohorts/Details/5
