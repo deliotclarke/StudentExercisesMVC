@@ -6,29 +6,27 @@ using System.Threading.Tasks;
 
 namespace StudentExerciesesMVC.Models
 {
-    public class Student
+    public class Instructor
     {
-        [Display(Name = "Student ID")]
-        public int? StudentId { get; set; }
-        // the question mark sets it's default value to null and says that it can be null
-
+        [Required]
+        public int Id { get; set; }
         [Required]
         [Display(Name = "First Name")]
-        [MaxLength(20)]
         public string FirstName { get; set; }
         [Required]
         [Display(Name = "Last Name")]
-        [MaxLength(20)]
         public string LastName { get; set; }
         [Required]
         [Display(Name = "Slack Handle")]
-        [MinLength(2)]
         public string SlackHandle { get; set; }
         [Required]
-        [Display(Name = "Cohort ID")]
+        public string Specialty { get; set; }
+        [Required]
+        [Display(Name = "Cohort Id")]
         public int CohortId { get; set; }
+        
         [Display(Name = "Full Name")]
-        public String FullName
+        public string FullName
         {
             get
             {
