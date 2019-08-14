@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using StudentExerciesesMVC.Models;
+using StudentExercisesMVC.Models;
 
-namespace StudentExerciesesMVC.Controllers
+namespace StudentExercisesMVC.Controllers
 {
     public class CohortsController : Controller
     {

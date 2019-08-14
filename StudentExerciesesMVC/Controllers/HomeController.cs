@@ -5,10 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using StudentExerciesesMVC.Models;
 using StudentExercises.Models.ViewModels;
+using StudentExercisesMVC.Models;
 
-namespace StudentExerciesesMVC.Controllers
+namespace StudentExercisesMVC.Controllers
 {
     public class HomeController : Controller
     {

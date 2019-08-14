@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace StudentExerciesesMVC
+namespace StudentExercisesMVC
 {
     public class Startup
     {

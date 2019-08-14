@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using StudentExerciesesMVC.Models;
-using StudentExercises.Models.ViewModels;
+using StudentExercisesMVC.Models;
+using StudentExercisesMVC.Models.ViewModels;
 
-namespace StudentExerciesesMVC.Controllers
+namespace StudentExercisesMVC.Controllers
 {
     public class InstructorsController : Controller
     {
@@ -163,7 +163,14 @@ namespace StudentExerciesesMVC.Controllers
         // GET: Instructors/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            //use GetSingleInstructor to get the Instructor you want to edit
+            Instructor instructor = GetSingleInstructor(id);
+            //Use GetAllCohorts to get a list of cohorts
+            List<Cohort> cohorts = GetAllCohorts();
+            //pass both the Instructor and the List of Cohorts into an instance of the InstructorEditViewModel
+            var viewModel = new InstructorEditViewModel(instructor, cohorts);
+            //pass the instance of the viewModel into View()
+            return View(viewModel);
         }
 
         // POST: Instructors/Edit/5
@@ -190,9 +197,9 @@ namespace StudentExerciesesMVC.Controllers
         }
 
         // POST: Instructors/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteInstructor(int id)
         {
             try
             {
@@ -206,6 +213,39 @@ namespace StudentExerciesesMVC.Controllers
             }
         }
 
+        private Instructor GetSingleInstructor(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                Instructor instructor = null;
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id, FirstName, LastName, SlackHandle, Specialty, CohortId
+                        FROM Instructor
+                        WHERE Id = @id
+                    ";
+
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        instructor = new Instructor()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                            SlackHandle = reader.GetString(reader.GetOrdinal("SlackHandle")),
+                            Specialty = reader.GetString(reader.GetOrdinal("Specialty")),
+                            CohortId = reader.GetInt32(reader.GetOrdinal("CohortId")),
+                        };
+                    }
+                }
+                return instructor;
+            }
+        }
         private List<Cohort> GetAllCohorts()
         {
             using (SqlConnection conn = Connection)
