@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace StudentExercises.Models.ViewModels
 {
-    public class StudentCreateViewModel
+    public class InstructorCreateViewModel
     {
         public List<SelectListItem> Cohorts { get; set; }
-        public Student Student { get; set; }
+        public Instructor Instructor { get; set; }
     }
 }
