@@ -8,13 +8,28 @@ namespace StudentExercisesMVC.Models.ViewModels
 {
     public class InstructorEditViewModel
     {
+        public Instructor Instructor { get; set; }
+
+        public List<SelectListItem> Cohorts { get; set; }
+
         public InstructorEditViewModel() { }
 
         public InstructorEditViewModel(Instructor instructor, List<Cohort> cohortList)
         {
-            var Instructor = instructor;
-            var Cohorts = cohortList
-                .Select(cohort => new SelectListItem { });
+            Instructor = instructor;
+            Cohorts = cohortList
+                .Select(cohort => new SelectListItem
+                {
+                    Text = cohort.Name,
+                    Value = cohort.Id.ToString()
+                })
+                .ToList();
+
+            Cohorts.Insert(0, new SelectListItem
+            {
+                Text = "Choose cohort...",
+                Value = "0"
+            });
         }
     }
 }

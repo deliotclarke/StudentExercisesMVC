@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace StudentExercises.Models.ViewModels
+namespace StudentExercisesMVC.Models.ViewModels
 {
     public class StudentCreateViewModel
     {
