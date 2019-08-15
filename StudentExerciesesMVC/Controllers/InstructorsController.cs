@@ -188,11 +188,11 @@ namespace StudentExercisesMVC.Controllers
                     {
                         cmd.CommandText = @"UPDATE Instructor
                                             SET
-                                                FirstName = @firstName,
-                                                LastName = @lastName,
-                                                SlackHandle = @slackHandle,
-                                                Specialty = @specialty,
-                                                CohortId = @cohortId
+                                            FirstName = @firstName,
+                                            LastName = @lastName,
+                                            SlackHandle = @slackHandle,
+                                            Specialty = @specialty,
+                                            CohortId = @cohortId
                                             WHERE Id = @id";
                         cmd.Parameters.AddWithValue("@firstName", model.Instructor.FirstName);
                         cmd.Parameters.AddWithValue("@lastName", model.Instructor.LastName);
@@ -217,7 +217,10 @@ namespace StudentExercisesMVC.Controllers
         // GET: Instructors/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            //use GetSingleInstructor to get the Instructor you want to delete
+            Instructor instructor = GetSingleInstructor(id);
+            //pass that instructor into View()
+            return View(instructor);
         }
 
         // POST: Instructors/Delete/5
@@ -228,7 +231,23 @@ namespace StudentExercisesMVC.Controllers
             try
             {
                 // TODO: Add delete logic here
+                using (SqlConnection conn = Connection)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = @"UPDATE StudentExercise
+                                            SET InstructorId = 1
+                                            WHERE InstructorId = @id
+                                                
+                                            DELETE FROM Instructor
+                                            WHERE Id = @id";
 
+                        cmd.Parameters.AddWithValue("@id", id);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
