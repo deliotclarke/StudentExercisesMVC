@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using StudentExerciesesMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace StudentExercises.Models.ViewModels
+namespace StudentExercisesMVC.Models.ViewModels
 {
     public class InstructorCreateViewModel
     {
